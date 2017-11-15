@@ -34,7 +34,7 @@ var onLineCounts = 0;
 io.on('connection', function (socket) {
   console.log('a user connected');
   /*监听新用户加入*/
-  socket.on('anything', function (user) {
+  socket.on('login', function (user) {
     "use strict";
     /*监听到有用户发消息，将该消息广播给所有客户端*/
     socket.name = user.userId;
@@ -45,7 +45,7 @@ io.on('connection', function (socket) {
       onLineCounts++;
     }
     /*一个用户新加入，向所有客户端监听login的socket的实例发送响应，响应内容为一个对象*/
-    io.emit('anything', {
+    io.emit('login', {
       onLineUsers: onLineUsers,
       onLineCounts: onLineCounts,
       user: user

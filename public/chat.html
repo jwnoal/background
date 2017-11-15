@@ -49,17 +49,23 @@
           $(this).hide();
           $('.room').show();
           //websocket
-          console.log(id, name);
           var socket = io.connect(appUrl);
           // 发送登录信息
-          socket.emit('anything', {
+          socket.emit('login', {
             userId: id,
             userName: name
           });
           /*监听到有用户login了，更新信息*/
-          socket.on('anything', function (msg) {
-            //更新系统信息
+          socket.on('login', function (msg) {
             console.log(msg);
+            var content = '<div class="tongzhi">'+msg.user.userName+'加入聊天 当前在线' + msg.onLineCounts + '人</div>'
+            $('.con').append(content).scrollTop(conheight);
+          });
+          /*监听到有用户logout了，更新信息*/
+          socket.on('logout', function (msg) {
+            //更新系统信息
+            var content = '<div class="tongzhi">' + msg.user.userName + '离开聊天 当前在线'+ msg.onLineCounts+'人</div>'
+            $('.con').append(content).scrollTop(conheight);
           });
           $('#fasong').click(function () {
             var val = $('#ipt').val();

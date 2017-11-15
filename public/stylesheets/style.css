@@ -290,6 +290,12 @@ td {
   overflow: auto;
 }
 
+.chat .room .con .tongzhi {
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .chat .room .con .left {
   float: left;
   margin-bottom: 20px;
