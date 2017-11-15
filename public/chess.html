@@ -18,7 +18,7 @@
     }
 
     body {
-      background: url('./images/chessbg.jpg') no-repeat;
+      background: url('./images/chess.jpg') no-repeat;
       background-size: 100% 100%;
     }
 
@@ -54,9 +54,9 @@
     var chessWidth = width - padding * 2;
     var jiange = chessWidth / 14;
     // 判断该点能否点击
-    for (let i = 0; i < 15; i++) {
+    for (var i = 0; i < 15; i++) {
       qipan[i] = [];
-      for (let j = 0; j < 15; j++) {
+      for (var j = 0; j < 15; j++) {
         qipan[i][j] = 0;
       }
     }
@@ -119,7 +119,7 @@
       context.lineWidth = 2;
       context.strokeStyle = '#666';
       context.strokeRect(padding, padding, chessWidth, chessWidth);
-      for (let i = 0; i < 15; i++) {
+      for (var i = 0; i < 15; i++) {
         context.lineWidth = 1;
         context.beginPath();
         context.moveTo(padding + jiange * i, padding);
@@ -150,9 +150,9 @@
       }
       over = false;
       context.clearRect(0, 0, width, width);
-      for (let i = 0; i < 15; i++) {
+      for (var i = 0; i < 15; i++) {
         qipan[i] = [];
-        for (let j = 0; j < 15; j++) {
+        for (var j = 0; j < 15; j++) {
           qipan[i][j] = 0;
         }
       }
