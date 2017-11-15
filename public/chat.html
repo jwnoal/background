@@ -73,6 +73,7 @@
               name: name,
               val: val
             });
+            $('#ipt').val('');
           });
 
           //接收来自服务端的信息事件c_hi
@@ -103,7 +104,16 @@
           $('.tishi').show();
         }
       });
-
+      $('#name').keydown(function (e) {
+        if (e.keyCode == 13) {
+          $('#enter').click();
+        }
+       });
+       $('#ipt').keydown(function (e) {
+        if (e.keyCode == 13) {
+          $('#fasong').click();
+        }
+      });
     });
   </script>
 </body>
