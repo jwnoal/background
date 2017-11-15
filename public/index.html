@@ -3,23 +3,23 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="icon" sizes="any" mask="" href="./images/favicon.ico">
   <link rel="stylesheet" href="./stylesheets/style.min.css">
-  <title>noal</title>
+  <title>soymilk</title>
 </head>
 
 <body>
   <canvas id="drawImg"></canvas>
   <section class="main">
     <header>
-      just do it!
+      soymilk
     </header>
     <section class="contain">
       <ul class="con-ul">
         <li class="border1px">
-          <a href="./chat.html">聊天室</a>
+          <a href="chat.html">聊天室</a>
         </li>
         <li class="border1px">
           <a>五子棋</a>
@@ -44,7 +44,7 @@
       var height = $(window).height();
       canvas.width = width;
       canvas.height = height;
-      image.src = "images/chessbg.jpg";
+      image.src = "images/indexbg.jpg";
       image.onload = function () {
         window.addEventListener('deviceorientation', handleOrientation);
       }

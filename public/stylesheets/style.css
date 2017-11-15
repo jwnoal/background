@@ -32,7 +32,7 @@ td {
 }
 
 body {
-  font-size: 1.2rem;
+  font-size: 16px;
   color: #333333;
   background: #fff;
 }
@@ -135,6 +135,11 @@ i {
   height: 0;
 }
 
+input,
+button {
+  font-size: 16px;
+}
+
 input:focus,
 textarea:focus {
   outline: none;
@@ -191,7 +196,7 @@ td {
 }
 
 .main header {
-  color: #fff;
+  color: #333;
   font-size: 26px;
   text-align: center;
   display: block;
@@ -217,7 +222,6 @@ td {
   line-height: 50px;
   margin-bottom: 40px;
   text-align: center;
-  color: #fff;
   font-size: 18px;
 }
 
@@ -225,7 +229,9 @@ td {
   display: block;
   width: 100%;
   height: 100%;
-  color: #fff;
+  color: #333;
+  position: absolute;
+  z-index: 2;
 }
 
 .main .contain .con-ul li:nth-child(2n) {
@@ -233,7 +239,7 @@ td {
 }
 
 .chat .name {
-  display: none;
+  display: block;
   margin-top: 50px;
   text-align: center;
 }
@@ -244,11 +250,17 @@ td {
   margin-left: 5px;
   width: 200px;
   border-radius: 6px;
+}
+
+.chat .name .tishi {
+  color: red;
   font-size: 14px;
+  margin: 5px;
+  display: none;
 }
 
 .chat .name button {
-  width: 60px;
+  width: 80px;
   height: 30px;
   background: #057fd1;
   color: #fff;
@@ -263,13 +275,140 @@ td {
 }
 
 .chat .room {
+  display: none;
+  background: #ddd;
   position: fixed;
   z-index: 99;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background: #0d9fb3;
+}
+
+.chat .room .con {
+  padding-top: 10px;
+  overflow: auto;
+}
+
+.chat .room .con .left {
+  float: left;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.chat .room .con .left img {
+  width: 50px;
+  margin-left: 6px;
+  vertical-align: top;
+}
+
+.chat .room .con .left .cont {
+  display: inline-block;
+  max-width: 70%;
+  margin-left: 10px;
+  font-size: 14px;
+  position: relative;
+}
+
+.chat .room .con .left .cont span {
+  font-size: 12px;
+  color: #666;
+}
+
+.chat .room .con .left .cont p {
+  line-height: 17px;
+  margin-top: 4px;
+  background: #fff;
+  border-radius: 6px;
+  padding: 5px;
+}
+
+.chat .room .con .left .cont:before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: url("../images/leftjt.png") no-repeat;
+  background-size: cover;
+  position: absolute;
+  left: -11px;
+  top: 21px;
+}
+
+.chat .room .con .right {
+  float: right;
+  width: 100%;
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.chat .room .con .right img {
+  width: 50px;
+  margin-right: 6px;
+  vertical-align: top;
+}
+
+.chat .room .con .right .cont {
+  display: inline-block;
+  max-width: 70%;
+  margin-right: 10px;
+  font-size: 14px;
+  position: relative;
+}
+
+.chat .room .con .right .cont span {
+  font-size: 12px;
+  color: #666;
+}
+
+.chat .room .con .right .cont p {
+  line-height: 17px;
+  margin-top: 4px;
+  background: #fff;
+  border-radius: 6px;
+  padding: 5px;
+  text-align: left;
+}
+
+.chat .room .con .right .cont:before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: url("../images/rightjt.png") no-repeat;
+  background-size: cover;
+  position: absolute;
+  right: -11px;
+  top: 21px;
+}
+
+.chat .room .foot {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 7px;
+  background: #fff;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.chat .room .foot input {
+  display: inline-block;
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  border-radius: 4px;
+  width: 70%;
+  height: 100%;
+}
+
+.chat .room .foot button {
+  display: inline-block;
+  padding: 6px 0;
+  margin-left: 2%;
+  width: 15%;
+  border-radius: 4px;
+  color: #057fd1;
 }
 
 .border1px {
@@ -283,7 +422,7 @@ td {
   position: absolute;
   top: 0;
   left: 0;
-  border: 1px solid #ddd;
+  border: 1px solid #333;
   border-radius: 4px;
   -webkit-transform: scale(0.5, 0.5);
   transform: scale(0.5, 0.5);
