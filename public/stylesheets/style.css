@@ -114,6 +114,11 @@ html {
   font-size: 10px;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 em,
 i {
   font-style: normal;
@@ -393,7 +398,6 @@ td {
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 7px;
   background: #fff;
   border: 1px solid #ddd;
   text-align: center;
@@ -406,6 +410,7 @@ td {
   border-radius: 4px;
   width: 70%;
   height: 100%;
+  margin: 6px 0;
 }
 
 .chat .room .foot button {
@@ -415,6 +420,7 @@ td {
   width: 15%;
   border-radius: 4px;
   color: #057fd1;
+  background: none;
 }
 
 .border1px {
