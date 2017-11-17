@@ -77,6 +77,16 @@ io.on('connection', function (socket) {
     /*监听到有用户发消息，将该消息广播给所有客户端*/
     io.emit('message', obj);
   });
+
+  socket.on('chessclick', function (obj) {
+    "use strict";
+    if(obj.length%2==0){
+      obj.type = true;
+    }else{
+      obj.type = false;
+    }
+    io.emit('chessclick', obj);
+  });
 });
 
 /**
