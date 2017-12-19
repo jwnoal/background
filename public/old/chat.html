@@ -43,6 +43,7 @@
       $('.con').height(conheight);
       $('#enter').click(function () {
         var name = $('#name').val();
+        name = name.replace(/</g, '&lt;');
         var id = new Date().getTime() + "" + Math.floor(Math.random() * 889 + 100);
         // 昵称不为空则登录
         if (name) {
@@ -69,6 +70,7 @@
           });
           $('#fasong').click(function () {
             var val = $('#ipt').val();
+            val = val.replace(/</g, '&lt;');
             if(val!=''){
               socket.emit('message', {
                 name: name,
