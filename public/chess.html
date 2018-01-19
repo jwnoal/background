@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" sizes="any" mask="" href="./images/favicon.ico">
+  <link rel="stylesheet" href="./stylesheets/style.min.css">
+  <title>五子棋</title>
+  <style>
+    body {
+      background: url('./images/chess.jpg') no-repeat;
+      background-size: 100% 100%;
+    }
+
+    canvas {
+      -webkit-tap-highlight-color: transparent;
+      /* margin-top: 70px; */
+    }
+
+    .border {
+      display: inline-block;
+      border: 1px solid #000;
+      padding: 4px 10px;
+      margin-left: 20px;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="chess"></canvas>
+  <span id="huiqi" class="border" onclick="huiqi()">悔棋</span>
+  <span class="border" onclick="reopen()">重开</span>
+  <script src="./javascripts/jquery.min.js"></script>
+  <script src="./javascripts/fastclick.js"></script>
+  <script src="./javascripts/common.js"></script>
+  <script>
+    var canvas = document.getElementById("chess");
+    var context = canvas.getContext('2d');
+    var width = document.body.clientWidth;
+    var padding = 15;
+    var type = true;
+    var qipan = [];
+    var over = false;
+    var chessWidth = width - padding * 2;
+    var jiange = chessWidth / 14;
+    var youzi = [];
+    var heiWin = [];
+    var baiWin = [];
+    // 判断该点能否点击
+    for (var i = 0; i < 15; i++) {
+      qipan[i] = [];
+      for (var j = 0; j < 15; j++) {
+        qipan[i][j] = 0;
+      }
+    }
+    canvas.width = width;
+    canvas.height = width;
+    var image = new Image();
+    image.src = "images/chess.jpg";
+    image.onload = function () {
+      // context.drawImage(image, 0, 0, width, width);
+      drawLine();
+      $('#chess').click(function (e) {
+        if (over) {
+          return;
+        }
+        var x = e.offsetX;
+        var y = e.offsetY;
+        var i = Math.floor(x / jiange);
+        var j = Math.floor(y / jiange);
+        if (qipan[i][j] == 0) {
+          drawChess(i, j, type);
+          youzi.push({
+            i,
+            j,
+            type
+          });
+          // 判断下黑棋还是白棋
+          type = !type;
+          if (type) {
+            qipan[i][j] = 1;
+            for (var k = 0; k < count; k++) {
+              if (wins[i][j][k]) {
+                // 如果下在第k种赢法上，那么k的赢法五颗子就多了一颗子
+                baiWin[k]++;
+                if (baiWin[k] == 5) {
+                  over = true;
+                  window.alert('白棋获胜！');
+                }
+              }
+            }
+          } else {
+            qipan[i][j] = 2;
+            for (var k = 0; k < count; k++) {
+              if (wins[i][j][k]) {
+                heiWin[k]++;
+                if (heiWin[k] == 5) {
+                  over = true;
+                  window.alert('黑棋获胜！');
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+    // 画线
+    function drawLine() {
+      context.lineWidth = 2;
+      context.strokeStyle = '#333';
+      context.strokeRect(padding, padding, chessWidth, chessWidth);
+      for (var i = 0; i < 15; i++) {
+        context.lineWidth = 1;
+        context.beginPath();
+        context.moveTo(padding + jiange * i, padding);
+        context.lineTo(padding + jiange * i, chessWidth + padding);
+        context.moveTo(padding, padding + jiange * i);
+        context.lineTo(chessWidth + padding, padding + jiange * i);
+        context.stroke();
+      }
+      drawArc(7, 7);
+      drawArc(3, 3);
+      drawArc(3, 11);
+      drawArc(11, 3);
+      drawArc(11, 11);
+    }
+    // 画五个点
+    function drawArc(x, y) {
+      context.fillStyle = '#333';
+      context.beginPath();
+      context.arc(padding + jiange * x, padding + jiange * y, jiange / 8, 0, 2 * Math.PI);
+      context.closePath();
+      context.fill();
+    }
+    // 重开
+    function reopen() {
+      type = true;
+      youzi.length = 0;
+      for (var i = 0; i < count; i++) {
+        heiWin[i] = 0;
+        baiWin[i] = 0;
+      }
+      over = false;
+      context.clearRect(0, 0, width, width);
+      for (var i = 0; i < 15; i++) {
+        qipan[i] = [];
+        for (var j = 0; j < 15; j++) {
+          qipan[i][j] = 0;
+        }
+      }
+      drawLine();
+    }
+    // 悔棋
+    function huiqi() {
+      // youzi = youzi.splice(youzi.length+1, 1);
+      var q = youzi[youzi.length - 1].i;
+      var w = youzi[youzi.length - 1].j;
+      var t = youzi[youzi.length - 1].type;
+      if (t) {
+        for (var k = 0; k < count; k++) {
+          if (wins[q][w][k]) {
+            heiWin[k]--;
+          }
+        }
+      } else {
+        for (var k = 0; k < count; k++) {
+          if (wins[q][w][k]) {
+            baiWin[k]--;
+          }
+        }
+      }
+      qipan[q][w] = 0;
+      type = !type;
+      youzi.length = youzi.length - 1;
+      // for (var i = 0; i < count; i++) {
+      //   heiWin[i] = 0;
+      //   baiWin[i] = 0;
+      // }
+      over = false;
+      context.clearRect(0, 0, width, width);
+      drawLine();
+      for (var i = 0; i < youzi.length; i++) {
+        var x = youzi[i].i;
+        var y = youzi[i].j;
+        var t = youzi[i].type;
+        drawChess(x, y, t);
+      }
+    }
+    // 画棋子
+    function drawChess(x, y, t) {
+      context.beginPath();
+      context.arc(padding + jiange * x, padding + jiange * y, jiange / 5 * 2, 0, 2 * Math.PI);
+      // context.closePath();
+      var gradent = context.createRadialGradient(padding + jiange * x + 2, padding + jiange * y - 2, padding, padding +
+        jiange * x + 2, padding + jiange * y - 2, 2);
+      if (t) {
+        gradent.addColorStop(0, '#0a0a0a');
+        gradent.addColorStop(1, '#636766');
+      } else {
+        gradent.addColorStop(0, '#333');
+        gradent.addColorStop(1, '#f9f9f9');
+      }
+      context.fillStyle = gradent;
+      context.fill();
+    }
+
+    // 赢法数组
+    var wins = []; //所有赢法
+    var chessBoard = []; //棋盘
+    for (var i = 0; i < 15; i++) {
+      chessBoard[i] = [];
+      for (var j = 0; j < 15; j++) {
+        chessBoard[i][j] = 0;
+      }
+    }
+    for (var i = 0; i < 15; i++) {
+      wins[i] = [];
+      for (var j = 0; j < 15; j++) {
+        wins[i][j] = [];
+      }
+    }
+    var count = 0; //第几种赢法
+    // 所有横线赢法
+    for (var i = 0; i < 15; i++) {
+      for (var j = 0; j < 11; j++) {
+        for (var k = 0; k < 5; k++) {
+          wins[i][j + k][count] = true;
+        }
+        count++;
+      }
+    }
+    // 所有竖线赢法
+    for (var i = 0; i < 15; i++) {
+      for (var j = 0; j < 11; j++) {
+        for (var k = 0; k < 5; k++) {
+          wins[j + k][i][count] = true;
+        }
+        count++;
+      }
+    }
+    // 所有斜线赢法
+    for (var i = 0; i < 11; i++) {
+      for (var j = 0; j < 11; j++) {
+        for (var k = 0; k < 5; k++) {
+          wins[i + k][j + k][count] = true;
+        }
+        count++;
+      }
+    }
+    // 所有反斜线赢法
+    for (var i = 0; i < 11; i++) {
+      for (var j = 14; j > 3; j--) {
+        for (var k = 0; k < 5; k++) {
+          wins[i + k][j - k][count] = true;
+        }
+        count++;
+      }
+    }
+
+    // 赢法统计数组
+    for (var i = 0; i < count; i++) {
+      heiWin[i] = 0;
+      baiWin[i] = 0;
+    }
+  </script>
+</body>
+
+</html>
