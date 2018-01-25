@@ -5,7 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var cors = require('cors');
+// 跨域处理
+// var cors = require('cors');
+// 解决跨域问题   代理
 var proxy = require('http-proxy-middleware');
 
 var index = require('./routes/index');
@@ -13,7 +15,7 @@ var users = require('./routes/users');
 
 var app = express();
 
-app.use(cors());
+// app.use(cors());
 // app.use('/github', proxy({ target: 'http://192.168.1.18:5500', changeOrigin: true }));
 
 // view engine setup
