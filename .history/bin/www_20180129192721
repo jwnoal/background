@@ -28,7 +28,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-// var server = http.createServer(app);
+var server = http.createServer(app);
 var server = require('http').createServer(function(req, res) {
     var host = req.headers.host;
     switch (host) {
